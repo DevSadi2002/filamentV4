@@ -43,7 +43,7 @@ class BrandResource extends Resource
     {
         return [
             'index' => ListBrands::route('/'),
-            'create' => CreateBrand::route('/create'),
+            // 'create' => CreateBrand::route('/create'),
             'edit' => EditBrand::route('/{record}/edit'),
         ];
     }
