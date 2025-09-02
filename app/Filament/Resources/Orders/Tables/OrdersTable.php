@@ -2,12 +2,18 @@
 
 namespace App\Filament\Resources\Orders\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ActionGroup;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\DateFilter;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\GroupBulkAction;
+use Filament\Tables\Columns\SelectColumn;
 
 class OrdersTable
 {
@@ -15,24 +21,48 @@ class OrdersTable
     {
         return $table
             ->columns([
-                TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('user.name')
+                    ->label('Customer')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('grand_total')
+                    ->label('Grand Total')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->money(fn($record) => $record->currency ?? 'USD')
+                    ->toggleable(),
                 TextColumn::make('payment_method')
-                    ->searchable(),
+                    ->label('Payment Method')
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('payment_status')
-                    ->searchable(),
-                TextColumn::make('status'),
+                    ->label('Payment Status')
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('currency')
+                    ->label('Currency')
                     ->searchable(),
-                TextColumn::make('shipping_amount')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('shipping_method')
+                    ->label('Shipping Method')
                     ->searchable(),
+                SelectColumn::make('status')
+                    ->label('Order Status')
+                    ->options([
+                        'new' => 'New',
+                        'processing' => 'Processing',
+                        'shipped' => 'Shipped',
+                        'delivered' => 'Delivered',
+                        'cancelled' => 'Cancelled',
+                    ])
+                    ->toggleable(),
+
+                TextColumn::make('shipping_amount')
+                    ->label('Shipping Amount')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -43,15 +73,41 @@ class OrdersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('payment_status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'paid' => 'Paid',
+                        'failed' => 'Failed',
+                    ]),
+                SelectFilter::make('status')
+                    ->options([
+                        'new' => 'New',
+                        'processing' => 'Processing',
+                        'shipped' => 'Shipped',
+                        'delivered' => 'Delivered',
+                        'cancelled' => 'Cancelled',
+                    ]),
+                SelectFilter::make('currency')
+                    ->options([
+                        'NIS' => 'NIS',
+                        'USD' => 'USD',
+                        'EUR' => 'EUR',
+                        'GBP' => 'GBP',
+                    ]),
+
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+
+
                 ]),
             ]);
     }
