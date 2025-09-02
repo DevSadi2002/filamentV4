@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Products\Schemas;
 
+use App\Models\Product;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
@@ -10,6 +11,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
@@ -23,14 +25,16 @@ class ProductForm
                     Section::make('Product Information')->schema([
                         TextInput::make('name')
                             ->required()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(callback: fn(string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null)
                             ->maxLength(255),
                         TextInput::make('slug')
                             ->required()
+                            ->disabled()
                             ->maxLength(255)
-                            ->unique(ignoreRecord: true)
+                            ->unique(Product::class, ignoreRecord: true)
                             ->helperText('If left empty, the slug will be generated from the name.')
-                            ->dehydrated(false)
-                            ->afterStateUpdated(fn(string $state, callable $set) => $set('slug', Str::slug($state))),
+                            ->dehydrated(),
                         MarkdownEditor::make('description')
                             ->columnSpanFull()
                             ->fileAttachmentsDirectory('products/descriptions')
@@ -50,6 +54,7 @@ class ProductForm
                         TextInput::make('price')
                             ->required()
                             ->numeric()
+                            ->prefix('$')
                             ->minValue(0)
                             ->step(0.01),
                     ]),
