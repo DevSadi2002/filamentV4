@@ -5,16 +5,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    {{--  cdn tailwind --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> --}}
     <title>{{ $title ?? 'Hope Store' }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- <script src="https://unpkg.com/preline@1.x.x/dist/preline.js"></script> --}}
 
+
+    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
     @livewireStyles()
 </head>
 
 <body class="bg-state-200 dark:bg-slate-700">
-    {{ $slot }}
+    @livewire('partials.navbar')
+    <main>
+        {{ $slot }}
+    </main>
 
+    @livewire('partials.footer')
     @livewireScripts()
+
+
 </body>
 
 </html>
