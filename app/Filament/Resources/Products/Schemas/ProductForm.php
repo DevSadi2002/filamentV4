@@ -44,6 +44,7 @@ class ProductForm
                             ->image()
                             ->multiple()
                             ->maxFiles(5)
+                            ->disk('public')
                             ->directory('products/images')
                             ->reorderable(),
                     ]),

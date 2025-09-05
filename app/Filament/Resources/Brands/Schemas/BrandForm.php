@@ -29,19 +29,20 @@ class BrandForm
                         TextInput::make('slug')
                             ->disabled()
                             ->maxLength(255)
-                            ->unique(table: 'categories', ignoreRecord: true)
+                            ->unique(table: 'brands', ignoreRecord: true)
                             ->dehydrated()
                             ->required(),
+
                         FileUpload::make('image')
                             ->image()
-                            ->directory('categories'),
+                            ->disk('public') // مهم!
+                            ->directory('brands'),
 
                         Toggle::make('is_active')
                             ->default(true)
                             ->required(),
-                    ])->columns(['sm' => 1, 'md' => 2, 'lg' => 2]),
-
-                ])
+                    ])
+                ])->columnSpanFull()
             ]);
     }
 }

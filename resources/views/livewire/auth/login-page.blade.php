@@ -47,7 +47,7 @@
                                     <label for="password" class="block text-sm mb-2 dark:text-white">Password</label>
                                     <a wire:navigate
                                         class="text-sm text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                                        href="/forgot">Forgot password?</a>
+                                        href="/forgot-password">Forgot password?</a>
                                 </div>
                                 <div class="relative">
                                     <input type="password" id="password" name="password"
