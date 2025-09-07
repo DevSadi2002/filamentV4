@@ -23,8 +23,10 @@ class BrandForm
                         TextInput::make('name')
                             ->required()
                             ->live(onBlur: true)
-                            ->reactive()
-                            ->afterStateUpdated(callback: fn(string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                            // ->reactive()
+                            ->lazy() // بدل reactive
+                            ->afterStateUpdated(callback: fn(string $operation, $state, Set $set) => $operation === 'create'  ? $set('slug', Str::slug($state)) : null)
+                            ->afterStateUpdated(callback: fn(string $operation, $state, Set $set) => $operation === 'edit'  ? $set('slug', Str::slug($state)) : null),
 
                         TextInput::make('slug')
                             ->disabled()

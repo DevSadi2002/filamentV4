@@ -23,6 +23,9 @@
     </main>
 
     @livewire('partials.footer')
+    {{--
+<x-livewire-alert::scripts /> --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @livewireScripts()
 
 

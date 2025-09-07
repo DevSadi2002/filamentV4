@@ -2,9 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Helpers\CartMangement;
+use App\Livewire\Partials\Navbar;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use Jantinnerezo\LivewireAlert\Concerns\SweetAlert2;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert as FacadesLivewireAlert;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -13,7 +18,7 @@ use Livewire\WithPagination;
 #[Title('Products Page - Hope Store')]
 class ProductsPage extends Component
 {
-    use WithPagination;
+    use WithPagination, SweetAlert2;
 
     #[Url]
     public $selected_categories = [];
@@ -32,6 +37,23 @@ class ProductsPage extends Component
 
     #[Url]
     public $price_range = 500;
+
+    // added
+    public function addToCart($productId)
+    {
+        // dd($productId);
+        $total_cart_count = CartMangement::addItem($productId);
+        $this->dispatch('update-cart-count', $total_cart_count)->to(Navbar::class);
+        FacadesLivewireAlert::title('Product added to cart successfully!')
+            ->success()
+            ->show();
+    }
+
+
+    // sort by , price or last add
+    #[Url]
+    public $sort = 'latest';
+
     public function render()
     {
         $productQuery = Product::query()->where('is_active', true);
@@ -54,6 +76,11 @@ class ProductsPage extends Component
         }
         if ($this->price_range) {
             $productQuery->whereBetween('price', [0, $this->price_range]);
+        }
+        if ($this->sort === 'latest') {
+            $productQuery->latest();
+        } elseif ($this->sort === 'price') {
+            $productQuery->orderBy('price', 'asc');
         }
 
 

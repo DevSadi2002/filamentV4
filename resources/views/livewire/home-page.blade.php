@@ -1,4 +1,4 @@
-<div>
+<div wire:poll>
     <div class="w-full h-screen bg-gradient-to-r from-blue-200 to-cyan-200 py-10 px-4 sm:px-6 lg:px-8 mx-auto">
         <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Grid -->
@@ -226,8 +226,8 @@
                 @foreach ($brands as $brand)
                     <div wire:key="{{ $brand->id }}" class="bg-white rounded-lg shadow-md dark:bg-gray-800">
                         <a href="/products?selected_brands[0]={{ $brand->id }}" class="">
-                            {{-- <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}" --}}
-                            <img src="{{ asset('storage', $brand->image) }}" alt="{{ $brand->name }}"
+                            <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}" <img
+                                src="{{ asset('storage', $brand->image) }}" alt="{{ $brand->name }}"
                                 class="object-cover w-full h-64 rounded-t-lg">
                         </a>
                         <div class="p-5 text-center">
