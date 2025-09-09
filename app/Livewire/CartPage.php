@@ -14,10 +14,17 @@ class CartPage extends Component
     public $cart_items = [];
     public $grand_total = 0;
 
+
     public function mount()
     {
+
+        // لو السلة فاضية → رجع المستخدم على صفحة المنتجات
+
         $this->cart_items = CartMangement::getCartItemsFromCookie();
         $this->grand_total = CartMangement::calculateGrandTotal($this->cart_items);
+        if (count($this->cart_items) == 0) {
+            return redirect('/products?price_range=1000'); //  كتابة الرابط مباشرة
+        }
     }
 
     public function removeItem($product_id)

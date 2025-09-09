@@ -22,6 +22,9 @@
                                         class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
                                         id="first_name" type="text">
                                     </input>
+                                    @error('first_name')
+                                        <p class="text-red-500 mt-1.5"> {{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div>
                                     <label class="block text-gray-700 dark:text-white mb-1" for="last_name">
@@ -31,6 +34,9 @@
                                         class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
                                         id="last_name" type="text">
                                     </input>
+                                    @error('last_name')
+                                        <p class="text-red-500 mt-1.5"> {{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mt-4">
@@ -41,6 +47,9 @@
                                     class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
                                     id="phone" type="text">
                                 </input>
+                                @error('phone')
+                                    <p class="text-red-500 mt-1.5"> {{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="mt-4">
                                 <label class="block text-gray-700 dark:text-white mb-1" for="address">
@@ -50,6 +59,9 @@
                                     class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
                                     id="address" type="text">
                                 </input>
+                                @error('street_address')
+                                    <p class="text-red-500 mt-1.5"> {{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="mt-4">
                                 <label class="block text-gray-700 dark:text-white mb-1" for="city">
@@ -59,6 +71,9 @@
                                     class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
                                     id="city" type="text">
                                 </input>
+                                @error('city')
+                                    <p class="text-red-500 mt-1.5"> {{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="grid grid-cols-2 gap-4 mt-4">
                                 <div>
@@ -69,6 +84,9 @@
                                         class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
                                         id="state" type="text">
                                     </input>
+                                    @error('state')
+                                        <p class="text-red-500 mt-1.5"> {{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div>
                                     <label class="block text-gray-700 dark:text-white mb-1" for="zip">
@@ -78,19 +96,23 @@
                                         class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
                                         id="zip" type="text">
                                     </input>
+                                    @error('zip_code')
+                                        <p class="text-red-500 mt-1.5"> {{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
-                        <div class="text-lg font-semibold mb-4">
+                        <div class="text-lg font-semibold mb-4 text-white">
                             Select Payment Method
                         </div>
                         <ul class="grid w-full gap-6 md:grid-cols-2">
                             <li>
-                                <input wire:model="payment_method" class="hidden peer" id="hosting-small"
-                                    required="" type="radio" value="cod" />
+                                <input wire:model="payment_method" class="hidden peer" id="hosting-small" type="radio"
+                                    value="cash" />
                                 <label
                                     class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                                     for="hosting-small">
+
                                     <div class="block">
                                         <div class="w-full text-lg font-semibold">
                                             Cash on Delivery
@@ -105,8 +127,8 @@
                                 </label>
                             </li>
                             <li>
-                                <input wire:model="payment_method" class="hidden peer" id="hosting-big"
-                                    type="radio" value="cod">
+                                <input wire:model="payment_method" class="hidden peer" id="hosting-big" type="radio"
+                                    value="stripe">
                                 <label
                                     class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                                     for="hosting-big">
@@ -133,7 +155,7 @@
                         <div class="text-xl font-bold underline text-gray-700 dark:text-white mb-2">
                             ORDER SUMMARY
                         </div>
-                        <div class="flex justify-between mb-2 font-bold">
+                        <div class="flex justify-between mb-2 font-bold text-white">
                             <span>
                                 Subtotal
                             </span>
@@ -141,7 +163,7 @@
                                 {{ Number::currency($grand_total, 'USD') }}
                             </span>
                         </div>
-                        <div class="flex justify-between mb-2 font-bold">
+                        <div class="flex justify-between mb-2 font-bold text-white">
                             <span>
                                 Taxes
                             </span>
@@ -149,7 +171,7 @@
                                 {{ Number::currency(0.0, 'USD') }}
                             </span>
                         </div>
-                        <div class="flex justify-between mb-2 font-bold">
+                        <div class="flex justify-between mb-2 font-bold text-white">
                             <span>
                                 Shipping Cost
                             </span>
@@ -159,7 +181,7 @@
                             </span>
                         </div>
                         <hr class="bg-slate-400 my-4 h-1 rounded">
-                        <div class="flex justify-between mb-2 font-bold">
+                        <div class="flex justify-between mb-2 font-bold text-white">
                             <span>
                                 Grand Total
                             </span>
@@ -171,7 +193,7 @@
                     </div>
                     <button type="submit"
                         class="bg-green-500 mt-4 w-full p-3 rounded-lg text-lg text-white hover:bg-green-600">
-                        Place Order
+                        Checkout
                     </button>
                     <div class="bg-white mt-4 rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
                         <div class="text-xl font-bold underline text-gray-700 dark:text-white mb-2">

@@ -13,7 +13,7 @@ use League\Csv\Query\Row;
 
 Route::get('/', \App\Livewire\HomePage::class);
 Route::get('/categories', \App\Livewire\CategoriesPage::class);
-Route::get('/products', \App\Livewire\ProductsPage::class);
+Route::get('/products', \App\Livewire\ProductsPage::class)->name('products');
 Route::get('/products/{slug}', \App\Livewire\ProductDetailPage::class)->name('product.details');
 Route::get('/cart', \App\Livewire\CartPage::class);
 Route::get('cancel', CancelPage::class);
@@ -32,15 +32,15 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(
     function () {
-        Route::get('/logout', function () {
+        Route::post('/logout', function () {
             auth()->logout();
             return redirect('/');
-        });
+        })->name('logout');
         Route::get('/checkout', \App\Livewire\CheckoutPage::class);
         Route::get('/my-orders', \App\Livewire\MyOrdersPage::class);
         Route::get('/my-orders/{order}', \App\Livewire\MyOrderDetailPage::class)->name('my-orders.details');
-        Route::get('/success', SuccessPage::class);
-        Route::get('/cancel', CancelPage::class);
+        Route::get('/success', SuccessPage::class)->name('seccess');
+        Route::get('/cancel', CancelPage::class)->name('cancel');
     }
 );
 // end of file

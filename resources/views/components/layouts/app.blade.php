@@ -26,6 +26,8 @@
     {{--
 <x-livewire-alert::scripts /> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline@1.4.0/dist/preline.min.js"></script>
+
     @livewireScripts()
 
 
