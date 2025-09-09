@@ -36,9 +36,9 @@ Route::middleware('auth')->group(
             auth()->logout();
             return redirect('/');
         })->name('logout');
-        Route::get('/checkout', \App\Livewire\CheckoutPage::class);
-        Route::get('/my-orders', \App\Livewire\MyOrdersPage::class);
-        Route::get('/my-orders/{order}', \App\Livewire\MyOrderDetailPage::class)->name('my-orders.details');
+        Route::get('/checkout', \App\Livewire\CheckoutPage::class)->name('checkout');
+        Route::get('/my-orders', \App\Livewire\MyOrdersPage::class)->name('my-orders');
+        Route::get('/my-orders/{order_id}', \App\Livewire\MyOrderDetailPage::class)->name('my-orders.details');
         Route::get('/success', SuccessPage::class)->name('seccess');
         Route::get('/cancel', CancelPage::class)->name('cancel');
     }
