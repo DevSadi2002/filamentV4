@@ -1,4 +1,4 @@
-{{-- <div wire:poll class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
+<div wire:poll class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
     <h1 class="text-4xl font-bold text-slate-500 mb-6">Order Details</h1>
 
     <!-- Grid Cards -->
@@ -122,9 +122,10 @@
                                         alt="{{ $item->product->name }}">
                                     <span class="font-semibold">{{ $item->product->name }}</span>
                                 </td>
-                                <td class="py-4">{{ number_format($item->price, 2) }}</td>
+                                <td class="py-4">
+                                    {{ number_format($item->unit_amount, 2) }}</td>
                                 <td class="py-4">{{ $item->quantity }}</td>
-                                <td class="py-4">{{ number_format($item->price * $item->quantity, 2) }}</td>
+                                <td class="py-4">{{ number_format($item->unit_amount * $item->quantity, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -136,7 +137,13 @@
                 <h2 class="font-3xl font-bold text-slate-500 mb-3">Shipping Address</h2>
                 <div class="flex justify-between items-center">
                     <div>
-                        <p>{{ $order->address->full_address ?? '-' }}</p>
+                        {{-- @dump($order->address->full_address) --}}
+                        <p class="font-semibold">
+                            {{ $order->address->city }},
+                            {{ $order->address->state }},
+                            {{ $order->address->zip_code }}
+
+                        </p>
                     </div>
                     <div>
                         <p class="font-semibold">Phone:</p>
@@ -170,4 +177,4 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
